@@ -6,6 +6,6 @@ import org.springframework.data.mongodb.core.mapping.Document
 @Document
 data class ProductSchema(
     @Id var id: String? = null,
-    var name: String,
-    var price: Float,
+    var name: String? = null,
+    var price: Float? = null,
 )

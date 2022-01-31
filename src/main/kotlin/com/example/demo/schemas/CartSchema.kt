@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @Document
 data class CartSchema(
-    @Id val id: String? = null,
+    @Id var id: String? = null,
     var items: ArrayList<CartItem> = ArrayList(),
     var total: Float
 )

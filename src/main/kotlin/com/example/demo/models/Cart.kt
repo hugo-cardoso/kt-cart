@@ -7,7 +7,9 @@ data class Cart(
     fun getTotal(): Float {
         var total = 0f;
         for (item in items) {
-            total += (item.product.price * item.quantity)
+            item.product.price?.let {
+                total += it * item.quantity
+            }
         }
         return total
     }
