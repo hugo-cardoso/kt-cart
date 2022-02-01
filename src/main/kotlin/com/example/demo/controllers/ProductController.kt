@@ -1,6 +1,7 @@
 package com.example.demo.controllers
 
 import com.example.demo.models.ProductCreateBody
+import com.example.demo.models.ProductFilter
 import com.example.demo.models.ProductUpdateBody
 import com.example.demo.schemas.ProductSchema
 import com.example.demo.services.ProductService
@@ -15,13 +16,17 @@ class ProductController(private val productService: ProductService) {
     @GetMapping
     fun getProducts(
         @RequestParam(required = false) name: String? = null,
-        @RequestParam(required = false) price: Float? = null
+        @RequestParam(required = false) minPrice: Float? = null,
+        @RequestParam(required = false) maxPrice: Float? = null,
     ): ResponseEntity<List<ProductSchema>> {
-        return if (
-            name != null ||
-            price != null
-        ) {
-            ResponseEntity.ok(productService.findByProperties(name, price))
+        val filter = ProductFilter()
+
+        name?.let { filter.name = it }
+        minPrice?.let { filter.minPrice = it }
+        maxPrice?.let { filter.maxPrice = it }
+
+        return if (filter.hasFilter()) {
+            ResponseEntity.ok(productService.findByFilter(filter))
         } else {
             ResponseEntity.ok(productService.getAll())
         }

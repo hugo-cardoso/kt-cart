@@ -1,6 +1,7 @@
 package com.example.demo.services
 
 import com.example.demo.exceptions.ProductNotFoundException
+import com.example.demo.models.ProductFilter
 import com.example.demo.repositories.ProductCustomRepository
 import com.example.demo.repositories.ProductRepository
 import com.example.demo.schemas.ProductSchema
@@ -37,5 +38,5 @@ class ProductService(
         return findProduct
     }
 
-    fun findByProperties(name: String?, price: Float?) = productCustomRepository.query(name, price)
+    fun findByFilter(filter: ProductFilter) = productCustomRepository.query(filter)
 }

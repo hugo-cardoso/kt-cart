@@ -1,5 +1,6 @@
 package com.example.demo.repositories
 
+import com.example.demo.models.ProductFilter
 import com.example.demo.schemas.ProductSchema
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria
@@ -9,12 +10,13 @@ import org.springframework.stereotype.Component
 @Component
 class ProductCustomRepository(private val mongoTemplate: MongoTemplate) {
 
-    fun query(name: String?, price: Float?): List<ProductSchema> {
+    fun query(filter: ProductFilter): List<ProductSchema> {
         val query = Query()
         val criteriaList: ArrayList<Criteria> = ArrayList()
 
-        name?.let { criteriaList.add(Criteria.where("name").`is`(it)) }
-        price?.let { criteriaList.add(Criteria.where("price").`is`(it)) }
+        filter.name?.let { criteriaList.add(Criteria.where("name").`is`(it)) }
+        filter.minPrice?.let { criteriaList.add(Criteria.where("price").gte(it)) }
+        filter.maxPrice?.let { criteriaList.add(Criteria.where("price").lte(it)) }
 
         query.addCriteria(Criteria().andOperator(*criteriaList.toTypedArray()))
 
