@@ -3,14 +3,14 @@ package com.example.demo.controllers
 import com.example.demo.models.ProductCreateBody
 import com.example.demo.models.ProductUpdateBody
 import com.example.demo.schemas.ProductSchema
-import com.example.demo.services.ProductServiceImpl
+import com.example.demo.services.ProductService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/product")
-class ProductController(private val productService: ProductServiceImpl) {
+class ProductController(private val productService: ProductService) {
 
     @GetMapping
     fun getProducts(

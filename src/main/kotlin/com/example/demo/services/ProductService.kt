@@ -7,7 +7,7 @@ import com.example.demo.schemas.ProductSchema
 import org.springframework.stereotype.Service
 
 @Service
-class ProductServiceImpl(
+class ProductService(
     val productRepository: ProductRepository,
     val productCustomRepository: ProductCustomRepository
 ) {

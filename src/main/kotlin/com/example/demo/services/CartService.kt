@@ -6,7 +6,7 @@ import com.example.demo.schemas.CartSchema
 import org.springframework.stereotype.Service
 
 @Service
-class CartServiceImpl(private val cartRepository: CartRepository) {
+class CartService(private val cartRepository: CartRepository) {
 
     fun getAll(): List<CartSchema> = cartRepository.findAll()
 

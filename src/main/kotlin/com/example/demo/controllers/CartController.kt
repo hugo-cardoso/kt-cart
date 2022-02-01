@@ -6,8 +6,8 @@ import com.example.demo.models.CartItem
 import com.example.demo.models.CartItemSimple
 import com.example.demo.schemas.CartSchema
 import com.example.demo.schemas.ProductSchema
-import com.example.demo.services.CartServiceImpl
-import com.example.demo.services.ProductServiceImpl
+import com.example.demo.services.CartService
+import com.example.demo.services.ProductService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/cart")
 class CartController(
-    private val cartService: CartServiceImpl,
-    private val productService: ProductServiceImpl
+    private val cartService: CartService,
+    private val productService: ProductService
 ) {
 
     @GetMapping
