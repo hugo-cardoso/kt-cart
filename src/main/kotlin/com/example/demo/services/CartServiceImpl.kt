@@ -6,19 +6,19 @@ import com.example.demo.schemas.CartSchema
 import org.springframework.stereotype.Service
 
 @Service
-class CartServiceImpl(private val cartRepository: CartRepository): GenericService<CartSchema> {
+class CartServiceImpl(private val cartRepository: CartRepository) {
 
-    override fun getAll(): List<CartSchema> = cartRepository.findAll()
+    fun getAll(): List<CartSchema> = cartRepository.findAll()
 
-    override fun getById(id: String): CartSchema {
+    fun getById(id: String): CartSchema {
         return cartRepository
             .findById(id)
             .orElseThrow { throw CartNotFoundException() }
     }
 
-    override fun create(cart: CartSchema) = cartRepository.save(cart)
+    fun create(cart: CartSchema) = cartRepository.save(cart)
 
-    override fun update(cart: CartSchema): CartSchema {
+    fun update(cart: CartSchema): CartSchema {
         val findCart = getById(cart.id.toString())
 
         return cartRepository.save(
@@ -30,7 +30,7 @@ class CartServiceImpl(private val cartRepository: CartRepository): GenericServic
         )
     }
 
-    override fun deleteById(id: String): CartSchema {
+    fun deleteById(id: String): CartSchema {
         val findCart = getById(id)
 
         cartRepository.delete(findCart)

@@ -1,24 +1,26 @@
 package com.example.demo.services
 
 import com.example.demo.exceptions.ProductNotFoundException
+import com.example.demo.repositories.ProductCustomRepository
 import com.example.demo.repositories.ProductRepository
 import com.example.demo.schemas.ProductSchema
 import org.springframework.stereotype.Service
 
 @Service
 class ProductServiceImpl(
-    val productRepository: ProductRepository
-): GenericService<ProductSchema> {
+    val productRepository: ProductRepository,
+    val productCustomRepository: ProductCustomRepository
+) {
 
-    override fun getById(id: String): ProductSchema = productRepository
+    fun getById(id: String): ProductSchema = productRepository
         .findById(id)
         .orElseThrow { ProductNotFoundException() }
 
-    override fun getAll(): List<ProductSchema> = productRepository.findAll()
+    fun getAll(): List<ProductSchema> = productRepository.findAll()
 
-    override fun create(product: ProductSchema) = productRepository.save(product)
+    fun create(product: ProductSchema) = productRepository.save(product)
 
-    override fun update(product: ProductSchema): ProductSchema {
+    fun update(product: ProductSchema): ProductSchema {
         val findProduct = getById(product.id.toString())
 
         product.name?.let { findProduct.name = it }
@@ -27,11 +29,13 @@ class ProductServiceImpl(
         return productRepository.save(findProduct)
     }
 
-    override fun deleteById(id: String): ProductSchema {
+    fun deleteById(id: String): ProductSchema {
         val findProduct = getById(id)
 
         productRepository.delete(findProduct)
 
         return findProduct
     }
+
+    fun findByProperties(name: String?, price: Float?) = productCustomRepository.query(name, price)
 }

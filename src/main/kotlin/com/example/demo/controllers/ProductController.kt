@@ -13,7 +13,19 @@ import org.springframework.web.bind.annotation.*
 class ProductController(private val productService: ProductServiceImpl) {
 
     @GetMapping
-    fun getProducts() = ResponseEntity.ok(productService.getAll())
+    fun getProducts(
+        @RequestParam(required = false) name: String? = null,
+        @RequestParam(required = false) price: Float? = null
+    ): ResponseEntity<List<ProductSchema>> {
+        return if (
+            name != null ||
+            price != null
+        ) {
+            ResponseEntity.ok(productService.findByProperties(name, price))
+        } else {
+            ResponseEntity.ok(productService.getAll())
+        }
+    }
 
     @GetMapping("/{id}")
     fun getProduct(@PathVariable id: String) = ResponseEntity.ok(productService.getById(id))
